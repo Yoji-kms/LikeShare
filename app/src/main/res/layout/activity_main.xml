@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarId"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/white"
+        app:title="@string/app_name"
+        app:navigationIcon="@drawable/ic_netology"
+        android:elevation="0dp"
+        android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:popupTheme="@style/Theme.AppCompat.Light" />
+
+    <TextView
+        android:paddingHorizontal="16dp"
+        android:id="@+id/textTxtViewId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/main_text"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbarId"
+        android:linksClickable="true"
+        android:autoLink="web"
+        android:textSize="16sp"
+        android:paddingBottom="8dp"/>
+
+    <CheckBox
+        android:id="@+id/likesCheckBoxId"
+        android:layout_marginStart="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/icon_height"
+        app:layout_constraintTop_toBottomOf="@id/textTxtViewId"
+        app:layout_constraintStart_toStartOf="parent"
+        android:button="@drawable/icon_like"
+        android:paddingStart="4dp"
+        tools:text="123"
+        tools:ignore="RtlSymmetry" />
+
+    <ImageButton
+        android:id="@+id/shareImgBtnId"
+        android:layout_width="@dimen/icon_width"
+        android:layout_height="@dimen/icon_height"
+        app:layout_constraintStart_toEndOf="@id/likesCheckBoxId"
+        app:layout_constraintTop_toBottomOf="@id/textTxtViewId"
+        android:background="@drawable/icon_share"
+        android:contentDescription="@string/share_button"
+        android:layout_marginStart="8dp"/>
+
+    <TextView
+        android:id="@+id/shareCounterTxtViewId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/shareImgBtnId"
+        app:layout_constraintBaseline_toBaselineOf="@id/likesCheckBoxId"
+        tools:text="456"
+        android:textColor="@color/black"
+        android:layout_marginStart="4dp"/>
+
+    <ImageView
+        android:id="@+id/watchesImgViewId"
+        android:layout_width="@dimen/icon_width"
+        android:layout_height="@dimen/icon_height"
+        android:background="@drawable/icon_watches"
+
+        app:layout_constraintTop_toBottomOf="@id/textTxtViewId"
+        app:layout_constraintEnd_toStartOf="@id/watchesCounterTxtViewId"
+        android:layout_marginEnd="4dp"
+        android:contentDescription="@string/watches" />
+
+    <TextView
+        android:id="@+id/watchesCounterTxtViewId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        tools:text="789"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBaseline_toBaselineOf="@id/likesCheckBoxId"/>
+
+    <Button
+        android:id="@+id/resetCountersBtnId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/set_random_num_to_counters"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="16dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
