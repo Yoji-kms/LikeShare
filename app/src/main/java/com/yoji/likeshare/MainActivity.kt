@@ -12,7 +12,7 @@ class MainActivity : AppCompatActivity() {
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val postViewModel: PostViewModel by viewModels()
+        val postViewModel = PostViewModel(PostRepositoryInMemoryImplementation())
         postViewModel.data.observe(this, { post ->
             with(binding) {
                 postCardViewId.toolbarId.title = post.author

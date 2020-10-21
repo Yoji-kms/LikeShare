@@ -2,8 +2,9 @@ package com.yoji.likeshare
 
 import androidx.lifecycle.ViewModel
 
-class PostViewModel : ViewModel() {
+class PostViewModel(
     private val postRepository: PostRepository = PostRepositoryInMemoryImplementation()
+) : ViewModel() {
     val data = postRepository.get()
     fun like() = postRepository.like()
     fun share() = postRepository.share()
