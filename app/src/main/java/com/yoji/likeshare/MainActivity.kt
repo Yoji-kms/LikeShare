@@ -2,6 +2,8 @@ package com.yoji.likeshare
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.TextUtils
+import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import com.yoji.likeshare.databinding.ActivityMainBinding
 
@@ -14,16 +16,26 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        val postAdapter = PostAdapter(
-            onLikeListener = { post -> postViewModel.likeById(post.id) },
-            onShareListener = { post -> postViewModel.shareById(post.id) },
-            onRemoveListener = { post -> postViewModel.removeById(post.id) },
-            onEditListener = { post ->
+        val postAdapter = PostAdapter(object : OnInteractionListener {
+            override fun onLike(post: Post) {
+                postViewModel.likeById(post.id)
+            }
+
+            override fun onShare(post: Post) {
+                postViewModel.shareById(post.id)
+            }
+
+            override fun onRemove(post: Post) {
+                postViewModel.removeById(post.id)
+            }
+
+            override fun onEdit(post: Post) {
                 binding.motionLayoutId.transitionToEnd()
                 binding.prevContentTxtViewId.text = post.content
                 postViewModel.edit(post)
             }
-        )
+        })
+
         binding.postListViewId.adapter = postAdapter
 
         binding.newContentEdtTxtId.addTextChangedListener(
@@ -32,6 +44,13 @@ class MainActivity : AppCompatActivity() {
 
         binding.saveBtnId.setOnClickListener {
             with(binding.newContentEdtTxtId) {
+                if (TextUtils.isEmpty(text)) {
+                    Toast.makeText(this@MainActivity,
+                        "Content is empty",
+                        Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+
                 postViewModel.changeContent(text.toString())
                 postViewModel.save()
 
