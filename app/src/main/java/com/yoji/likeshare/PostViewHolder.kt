@@ -6,10 +6,7 @@ import com.yoji.likeshare.databinding.ItemPostBinding
 class PostViewHolder
     (
     private val binding: ItemPostBinding,
-    private val onLikeListener: OnLikeListener,
-    private val onShareListener: OnShareListener,
-    private val onRemoveListener: OnRemoveListener,
-    private val onEditListener: OnEditListener
+    private val onInteractionListener: OnInteractionListener
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(post: Post) {
         binding.apply {
@@ -20,11 +17,11 @@ class PostViewHolder
             toolbarId.setOnMenuItemClickListener {
                 when (it.itemId) {
                     R.id.delete_post -> {
-                        onRemoveListener(post)
+                        onInteractionListener.onRemove(post)
                         true
                     }
                     R.id.edit_post -> {
-                        onEditListener(post)
+                        onInteractionListener.onEdit(post)
                         true
                     }
                     else -> false
@@ -33,9 +30,9 @@ class PostViewHolder
             textTxtViewId.text = post.content
             likesCheckBoxId.isChecked = post.likedByMe
             likesCheckBoxId.text = post.likesCounter.toFormattedString()
-            likesCheckBoxId.setOnClickListener { onLikeListener(post) }
+            likesCheckBoxId.setOnClickListener { onInteractionListener.onLike(post) }
             shareCounterTxtViewId.text = post.shareCounter.toFormattedString()
-            shareImgBtnId.setOnClickListener { onShareListener(post) }
+            shareImgBtnId.setOnClickListener { onInteractionListener.onShare(post) }
             watchesCounterTxtViewId.text = post.watchesCounter.toFormattedString()
         }
     }
