@@ -1,19 +1,37 @@
 package com.yoji.likeshare
 
+import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import com.yoji.likeshare.databinding.ActivityMainBinding
 import com.yoji.likeshare.databinding.ItemPostBinding
 
 class PostViewHolder
     (
     private val binding: ItemPostBinding,
     private val onLikeListener: OnLikeListener,
-    private val onShareListener: OnShareListener
+    private val onShareListener: OnShareListener,
+    private val onRemoveListener: OnRemoveListener,
+    private val onEditListener: OnEditListener
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(post: Post) {
         binding.apply {
             toolbarId.title = post.author
             toolbarId.subtitle = post.published
             toolbarId.navigationIcon = post.avatar
+            toolbarId.also { it.menu.clear() }.inflateMenu(R.menu.toolbar_menu)
+            toolbarId.setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.delete_post -> {
+                        onRemoveListener(post)
+                        true
+                    }
+                    R.id.edit_post -> {
+                        onEditListener(post)
+                        true
+                    }
+                    else -> false
+                }
+            }
             textTxtViewId.text = post.content
             likesCheckBoxId.isChecked = post.likedByMe
             likesCheckBoxId.text = post.likesCounter.toFormattedString()

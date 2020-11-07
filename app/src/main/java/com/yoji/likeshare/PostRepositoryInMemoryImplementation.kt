@@ -1,7 +1,6 @@
 package com.yoji.likeshare
 
 import android.annotation.SuppressLint
-import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import kotlin.random.Random
@@ -11,7 +10,7 @@ class PostRepositoryInMemoryImplementation : PostRepository {
     private var posts = listOf(
         Post(
             id = 1,
-            author = App.applicationContext().resources.getString(R.string.app_name),
+            author = App.applicationContext().resources.getString(R.string.netology_author),
             avatar = App.applicationContext().resources.getDrawable(R.drawable.ic_netology, null),
             published = App.applicationContext().resources.getString(R.string.some_date),
             content = App.applicationContext().resources.getString(R.string.content1),
@@ -22,7 +21,7 @@ class PostRepositoryInMemoryImplementation : PostRepository {
         ),
         Post(
             id = 2,
-            author = App.applicationContext().resources.getString(R.string.app_name),
+            author = App.applicationContext().resources.getString(R.string.netology_author),
             avatar = App.applicationContext().resources.getDrawable(R.drawable.ic_netology, null),
             published = App.applicationContext().resources.getString(R.string.some_date2),
             content = App.applicationContext().resources.getString(R.string.content2),
@@ -56,14 +55,32 @@ class PostRepositoryInMemoryImplementation : PostRepository {
         data.value = posts
     }
 
-    override fun randomCounters() {
-        posts = posts.map {
-            it.copy(
-                likesCounter = Random.nextInt(from = 0, until = 999),
-                shareCounter = Random.nextInt(from = 1_000, until = 999_999),
-                watchesCounter = Random.nextInt(from = 1_000_000, until = Int.MAX_VALUE)
-            )
+    override fun removeById(id: Long) {
+        posts = posts.filter { it.id != id }
+        data.value = posts
+    }
+
+    @SuppressLint("UseCompatLoadingForDrawables")
+    override fun save(post: Post) {
+        posts = if (post.id == 0L){
+            listOf(
+                post.copy(
+                    id = (posts.lastIndex + 2).toLong(),
+                    author = App.applicationContext().resources.getString(R.string.default_author),
+                    avatar = App.applicationContext().resources.getDrawable(
+                        R.drawable.ic_default_user,
+                        null
+                    ),
+                    likedByMe = false,
+                    published = App.applicationContext().resources.getString(R.string.default_date)
+                )
+            ) + posts
+        } else {
+            posts.map {
+                if (it.id != post.id) it else it.copy(content = post.content)
+            }
         }
         data.value = posts
     }
+
 }

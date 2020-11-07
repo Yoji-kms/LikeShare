@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Netology. Internet-professions of future university</string>
+    <string name="netology_author">Netology. Internet-professions of future university</string>
     <string name="content1">Hi, this is new Netology! Once, Netology started from online-marketing intensives. Then design, development, analytics and management courses were created. We grow ourselves and help our students to grow from rookies to confident professionals. But the most important thing stays with us: we believe that everyone already has power that makes them want more, aim higher, run faster. Our mission is to help you to get on the road of growth and start a chain of changes. http://netolo.gy/fyb</string>
     <string name="content2">Comments, likes and million subscribers: collected articles for everyone who works in Instagram 👇\n
 ▪ How to work with analytics in Instagram → http://netolo.gy/fVL\n
@@ -7,9 +7,15 @@
 ▪ 9 Telegram-bots, which make work in Instagram easier → http://netolo.gy/fVJ\n
 ▪ How to stir up corp Instagram → http://netolo.gy/fVK\n
 ▪ How pandemic changed Instagram → http://netolo.gy/fVM</string>
-    <string name="share_button" translatable="false">Share button</string>
-    <string name="watches" translatable="false">Watches</string>
-    <string name="set_random_num_to_counters">set random\n<br/>value to\n<br/>counters</string>
+    <string name="share_button_description" translatable="false">Share button</string>
+    <string name="watches_description" translatable="false">Watches</string>
     <string name="some_date">21 May at 18:36</string>
     <string name="some_date2">18 September at 10:12</string>
+    <string name="default_author">Me</string>
+    <string name="default_date">now</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="cancel_description" translatable="false">Cancel</string>
+    <string name="type_a_message">Type a message</string>
+    <string name="create_post_description" translatable="false">Create Post</string>
 </resources>

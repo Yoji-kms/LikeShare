@@ -2,6 +2,9 @@ package com.yoji.likeshare
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import androidx.core.widget.addTextChangedListener
 import com.yoji.likeshare.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -14,12 +17,33 @@ class MainActivity : AppCompatActivity() {
         val postViewModel = PostViewModel(PostRepositoryInMemoryImplementation())
         val postAdapter = PostAdapter(
             onLikeListener = { post -> postViewModel.likeById(post.id) },
-            onShareListener = { post -> postViewModel.shareById(post.id) }
+            onShareListener = { post -> postViewModel.shareById(post.id) },
+            onRemoveListener = { post -> postViewModel.removeById(post.id) },
+            onEditListener = { post ->
+                binding.motionLayoutId.transitionToEnd()
+                binding.prevContentTxtViewId.text = post.content
+                postViewModel.edit(post)
+            }
         )
         binding.postListViewId.adapter = postAdapter
 
-        postViewModel.data.observe(this, { posts -> postAdapter.submitList(posts) })
+        binding.newContentEdtTxtId.addTextChangedListener(
+            onTextChanged = { s, _, _, _ -> binding.saveBtnId.isEnabled = !s.isNullOrBlank() }
+        )
 
-        binding.resetCountersBtnId.setOnClickListener { postViewModel.randomCounters() }
+        binding.saveBtnId.setOnClickListener {
+            with(binding.newContentEdtTxtId){
+                postViewModel.changeContent(text.toString())
+                postViewModel.save()
+
+                setText("")
+                binding.prevContentTxtViewId.text = ""
+                clearFocus()
+                AndroidUtils.hideKeyboard(this)
+                binding.motionLayoutId.transitionToStart()
+            }
+        }
+
+        postViewModel.data.observe(this, { posts -> postAdapter.submitList(posts) })
     }
 }
