@@ -31,9 +31,9 @@ class PostViewModel(
         editingPost.value = post
     }
 
-//    fun clear(){
-//        editingPost.value = emptyPost
-//    }
+    fun clear(){
+        editingPost.value = emptyPost
+    }
 
     fun save() {
         editingPost.value?.let { postRepository.save(it) }

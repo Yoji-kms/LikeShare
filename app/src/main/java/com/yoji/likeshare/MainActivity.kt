@@ -2,19 +2,18 @@ package com.yoji.likeshare
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import androidx.core.widget.addTextChangedListener
 import com.yoji.likeshare.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
+    private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
+    private val postViewModel by lazy { PostViewModel(PostRepositoryInMemoryImplementation()) }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val postViewModel = PostViewModel(PostRepositoryInMemoryImplementation())
         val postAdapter = PostAdapter(
             onLikeListener = { post -> postViewModel.likeById(post.id) },
             onShareListener = { post -> postViewModel.shareById(post.id) },
@@ -32,18 +31,25 @@ class MainActivity : AppCompatActivity() {
         )
 
         binding.saveBtnId.setOnClickListener {
-            with(binding.newContentEdtTxtId){
+            with(binding.newContentEdtTxtId) {
                 postViewModel.changeContent(text.toString())
                 postViewModel.save()
 
-                setText("")
-                binding.prevContentTxtViewId.text = ""
-                clearFocus()
-                AndroidUtils.hideKeyboard(this)
-                binding.motionLayoutId.transitionToStart()
+                hideEditContentPanel()
             }
         }
 
+        binding.cancelBtnId.setOnClickListener {
+            postViewModel.clear()
+            hideEditContentPanel()
+        }
+
         postViewModel.data.observe(this, { posts -> postAdapter.submitList(posts) })
+    }
+
+    private fun hideEditContentPanel() {
+        AndroidUtils.hideKeyboard(binding.newContentEdtTxtId)
+        postViewModel.clear()
+        binding.motionLayoutId.transitionToStart()
     }
 }
