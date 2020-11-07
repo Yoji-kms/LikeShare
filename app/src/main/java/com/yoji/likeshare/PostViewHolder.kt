@@ -1,8 +1,6 @@
 package com.yoji.likeshare
 
-import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import com.yoji.likeshare.databinding.ActivityMainBinding
 import com.yoji.likeshare.databinding.ItemPostBinding
 
 class PostViewHolder

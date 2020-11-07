@@ -3,7 +3,6 @@ package com.yoji.likeshare
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
-import com.yoji.likeshare.databinding.ActivityMainBinding
 import com.yoji.likeshare.databinding.ItemPostBinding
 
 typealias OnLikeListener = (post: Post) -> Unit
