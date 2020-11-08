@@ -31,9 +31,9 @@ class PostViewHolder
             likesCheckBoxId.isChecked = post.likedByMe
             likesCheckBoxId.text = post.likesCounter.toFormattedString()
             likesCheckBoxId.setOnClickListener { onInteractionListener.onLike(post) }
-            shareCounterTxtViewId.text = post.shareCounter.toFormattedString()
-            shareImgBtnId.setOnClickListener { onInteractionListener.onShare(post) }
-            watchesCounterTxtViewId.text = post.watchesCounter.toFormattedString()
+            shareBtnId.text = post.shareCounter.toFormattedString()
+            shareBtnId.setOnClickListener { onInteractionListener.onShare(post) }
+            watchesBtnId.text = post.watchesCounter.toFormattedString()
         }
     }
 
