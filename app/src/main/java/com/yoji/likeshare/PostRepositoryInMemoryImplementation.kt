@@ -29,6 +29,18 @@ class PostRepositoryInMemoryImplementation : PostRepository {
             likesCounter = Random.nextInt(from = 0, until = 999),
             shareCounter = Random.nextInt(from = 0, until = 999),
             watchesCounter = Random.nextInt(from = 0, until = 999)
+        ),
+        Post(
+            id = 3,
+            author = App.applicationContext().resources.getString(R.string.netology_author),
+            avatar = App.applicationContext().resources.getDrawable(R.drawable.ic_netology, null),
+            published = App.applicationContext().resources.getString(R.string.some_date2),
+            content = "",
+            likedByMe = false,
+            video = "https://www.youtube.com/watch?v=pwHqY_4nsJ4",
+            likesCounter = Random.nextInt(from = 0, until = 999),
+            shareCounter = Random.nextInt(from = 1000, until = 99999),
+            watchesCounter = Random.nextInt(from = 0, until = 999)
         )
     )
     private val data = MutableLiveData(posts)

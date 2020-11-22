@@ -1,6 +1,7 @@
 package com.yoji.likeshare
 
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.result.ActivityResult
@@ -51,6 +52,10 @@ class MainActivity : AppCompatActivity() {
                     Intent(this@MainActivity, CreateOrEditActivity::class.java)
                     .putExtra(prevContent, post.content))
                 postViewModel.edit(post)
+            }
+
+            override fun onPlayVideo(post: Post) {
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(post.video)))
             }
         })
 

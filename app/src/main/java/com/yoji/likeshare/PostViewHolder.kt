@@ -1,5 +1,6 @@
 package com.yoji.likeshare
 
+import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.yoji.likeshare.databinding.ItemPostBinding
 
@@ -27,7 +28,14 @@ class PostViewHolder
                     else -> false
                 }
             }
-            textTxtViewId.text = post.content
+            if (!post.video.isNullOrBlank()) videoView
+                .also { it.visibility = View.VISIBLE }
+                .setOnClickListener { onInteractionListener.onPlayVideo(post) }
+            else videoView.visibility = View.GONE
+            if (post.content.isNotBlank()) textTxtViewId
+                .also { it.visibility = View.VISIBLE }
+                .text = post.content
+            else textTxtViewId.visibility = View.GONE
             likesCheckBoxId.isChecked = post.likedByMe
             likesCheckBoxId.text = post.likesCounter.toFormattedString()
             likesCheckBoxId.setOnClickListener { onInteractionListener.onLike(post) }

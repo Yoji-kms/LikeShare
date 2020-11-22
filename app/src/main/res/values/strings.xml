@@ -13,7 +13,6 @@
     <string name="default_date">now</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
-    <string name="cancel_description" translatable="false">Cancel</string>
     <string name="type_a_message">Type a message</string>
     <string name="create_post_description" translatable="false">Create Post</string>
 </resources>
