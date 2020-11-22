@@ -1,16 +1,33 @@
 package com.yoji.likeshare
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.TextUtils
-import android.widget.Toast
-import androidx.core.widget.addTextChangedListener
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import com.yoji.likeshare.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
     private val postViewModel by lazy { PostViewModel(PostRepositoryInMemoryImplementation()) }
+
+   companion object Code {
+       const val newContent = "New content"
+       const val prevContent = "Prev content"
+   }
+
+
+    val startCreateOrEditPostActivityForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            result: ActivityResult ->
+        when (result.resultCode){
+            RESULT_OK -> {
+                result.data?.getStringExtra(newContent)?.let { postViewModel.changeContent(it) }
+                postViewModel.save()
+            }
+            RESULT_CANCELED -> postViewModel.clear()
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,45 +47,21 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onEdit(post: Post) {
-                binding.motionLayoutId.transitionToEnd()
-                binding.prevContentTxtViewId.text = post.content
+                startCreateOrEditPostActivityForResult.launch(
+                    Intent(this@MainActivity, CreateOrEditActivity::class.java)
+                    .putExtra(prevContent, post.content))
                 postViewModel.edit(post)
             }
         })
 
         binding.postListViewId.adapter = postAdapter
 
-        binding.newContentEdtTxtId.addTextChangedListener(
-            onTextChanged = { s, _, _, _ -> binding.saveBtnId.isEnabled = !s.isNullOrBlank() }
-        )
-
-        binding.saveBtnId.setOnClickListener {
-            with(binding.newContentEdtTxtId) {
-                if (TextUtils.isEmpty(text)) {
-                    Toast.makeText(this@MainActivity,
-                        "Content is empty",
-                        Toast.LENGTH_SHORT).show()
-                    return@setOnClickListener
-                }
-
-                postViewModel.changeContent(text.toString())
-                postViewModel.save()
-
-                hideEditContentPanel()
-            }
-        }
-
-        binding.cancelBtnId.setOnClickListener {
-            postViewModel.clear()
-            hideEditContentPanel()
+        binding.createPostFab.setOnClickListener {
+            startCreateOrEditPostActivityForResult.launch(
+                Intent(this, CreateOrEditActivity::class.java)
+            )
         }
 
         postViewModel.data.observe(this, { posts -> postAdapter.submitList(posts) })
-    }
-
-    private fun hideEditContentPanel() {
-        AndroidUtils.hideKeyboard(binding.newContentEdtTxtId)
-        postViewModel.clear()
-        binding.motionLayoutId.transitionToStart()
     }
 }

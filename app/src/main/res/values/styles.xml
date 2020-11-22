@@ -6,6 +6,10 @@
         <item name="iconSize">@dimen/icon_size</item>
         <item name="iconGravity">textStart</item>
         <item name="iconPadding">4dp</item>
+
+    </style>
+
+    <style name="LikeBtnStyle" parent="TransparentBtnStyle">
         <item name="iconTint">@color/like_color_selector</item>
     </style>
 
@@ -14,7 +18,13 @@
         <item name="iconPadding">0dp</item>
         <item name="iconGravity">textStart</item>
         <item name="iconTint">@color/save_color_selector</item>
-        <item name="backgroundTint">@color/transparent</item>
+        <item name="backgroundTint">@color/design_default_color_secondary</item>
+        <item name="background">@color/transparent</item>
+    </style>
+
+    <style name="SaveBtnFabStyle" parent="Widget.MaterialComponents.FloatingActionButton">
+        <item name="tint">@color/save_color_selector</item>
+        <item name="backgroundTint">@color/design_default_color_secondary</item>
         <item name="background">@color/transparent</item>
     </style>
 </resources>
