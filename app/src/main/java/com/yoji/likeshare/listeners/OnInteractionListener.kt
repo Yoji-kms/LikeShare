@@ -1,4 +1,6 @@
-package com.yoji.likeshare
+package com.yoji.likeshare.listeners
+
+import com.yoji.likeshare.dto.Post
 
 interface OnInteractionListener {
     fun onLike(post: Post)

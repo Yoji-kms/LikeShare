@@ -1,17 +1,28 @@
-package com.yoji.likeshare
+package com.yoji.likeshare.repository
 
 import android.annotation.SuppressLint
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.yoji.likeshare.application.App
+import com.yoji.likeshare.dto.Post
+import com.yoji.likeshare.R
 import kotlin.random.Random
 
 class PostRepositoryInMemoryImplementation : PostRepository {
+
+    private val context: Context = App.applicationContext()
+
     @SuppressLint("UseCompatLoadingForDrawables")
     private var posts = listOf(
         Post(
             id = 1,
             author = App.applicationContext().resources.getString(R.string.netology_author),
-            avatar = App.applicationContext().resources.getDrawable(R.drawable.ic_netology, null),
+            avatar = context.resources.getIdentifier(
+                "ic_netology",
+                "drawable",
+                context.packageName
+            ),
             published = App.applicationContext().resources.getString(R.string.some_date),
             content = App.applicationContext().resources.getString(R.string.content1),
             likedByMe = false,
@@ -22,9 +33,13 @@ class PostRepositoryInMemoryImplementation : PostRepository {
         Post(
             id = 2,
             author = App.applicationContext().resources.getString(R.string.netology_author),
-            avatar = App.applicationContext().resources.getDrawable(R.drawable.ic_netology, null),
+            avatar = context.resources.getIdentifier(
+                "ic_netology",
+                "drawable",
+                context.packageName
+            ),
             published = App.applicationContext().resources.getString(R.string.some_date2),
-            content = App.applicationContext().resources.getString(R.string.content2),
+            content = context.resources.getString(R.string.content2),
             likedByMe = false,
             likesCounter = Random.nextInt(from = 0, until = 999),
             shareCounter = Random.nextInt(from = 0, until = 999),
@@ -33,7 +48,11 @@ class PostRepositoryInMemoryImplementation : PostRepository {
         Post(
             id = 3,
             author = App.applicationContext().resources.getString(R.string.netology_author),
-            avatar = App.applicationContext().resources.getDrawable(R.drawable.ic_netology, null),
+            avatar = context.resources.getIdentifier(
+                "ic_netology",
+                "drawable",
+                context.packageName
+            ),
             published = App.applicationContext().resources.getString(R.string.some_date2),
             content = "",
             likedByMe = false,
@@ -74,14 +93,15 @@ class PostRepositoryInMemoryImplementation : PostRepository {
 
     @SuppressLint("UseCompatLoadingForDrawables")
     override fun save(post: Post) {
-        posts = if (post.id == 0L){
+        posts = if (post.id == 0L) {
             listOf(
                 post.copy(
                     id = (posts.lastIndex + 2).toLong(),
                     author = App.applicationContext().resources.getString(R.string.default_author),
-                    avatar = App.applicationContext().resources.getDrawable(
-                        R.drawable.ic_default_user,
-                        null
+                    avatar = context.resources.getIdentifier(
+                        "ic_default_user",
+                        "drawable",
+                        context.packageName
                     ),
                     likedByMe = false,
                     published = App.applicationContext().resources.getString(R.string.default_date)

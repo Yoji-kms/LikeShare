@@ -1,4 +1,4 @@
-package com.yoji.likeshare
+package com.yoji.likeshare.application
 
 import android.app.Application
 import android.content.Context

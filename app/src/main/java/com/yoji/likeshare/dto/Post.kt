@@ -1,12 +1,9 @@
-package com.yoji.likeshare
-
-import android.graphics.drawable.Drawable
-import android.net.Uri
+package com.yoji.likeshare.dto
 
 data class Post(
     val id: Long,
     val author: String,
-    val avatar: Drawable,
+    val avatar: Int,
     val published: String,
     val content: String,
     val likedByMe: Boolean,

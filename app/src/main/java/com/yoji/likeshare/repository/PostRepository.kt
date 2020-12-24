@@ -1,6 +1,7 @@
-package com.yoji.likeshare
+package com.yoji.likeshare.repository
 
 import androidx.lifecycle.LiveData
+import com.yoji.likeshare.dto.Post
 
 interface PostRepository {
     fun getAll(): LiveData<List<Post>>

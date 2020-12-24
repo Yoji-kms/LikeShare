@@ -1,15 +1,20 @@
-package com.yoji.likeshare
+package com.yoji.likeshare.viewmodel
 
 import android.annotation.SuppressLint
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.yoji.likeshare.*
+import com.yoji.likeshare.application.App
+import com.yoji.likeshare.dto.Post
+import com.yoji.likeshare.repository.PostRepository
+import com.yoji.likeshare.repository.PostRepositoryJsonImplementation
 
 @SuppressLint("UseCompatLoadingForDrawables")
 private val emptyPost = Post(
     id = 0,
     content = "",
     author = "",
-    avatar = App.applicationContext().resources.getDrawable(R.drawable.ic_default_user, null),
+    avatar = PostRepositoryJsonImplementation.DEF_AVATAR_ID,
     likedByMe = false,
     published = App.applicationContext().resources.getString(R.string.default_date),
     likesCounter = 0,
@@ -18,7 +23,7 @@ private val emptyPost = Post(
 )
 
 class PostViewModel(
-    private val postRepository: PostRepository = PostRepositoryInMemoryImplementation()
+    private val postRepository: PostRepository
 ) : ViewModel() {
     val data = postRepository.getAll()
     private val editingPost = MutableLiveData(emptyPost)
@@ -31,7 +36,7 @@ class PostViewModel(
         editingPost.value = post
     }
 
-    fun clear(){
+    fun clear() {
         editingPost.value = emptyPost
     }
 

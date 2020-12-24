@@ -1,4 +1,4 @@
-package com.yoji.likeshare
+package com.yoji.likeshare.activity
 
 import android.content.Intent
 import android.net.Uri
@@ -6,12 +6,17 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import com.yoji.likeshare.listeners.OnInteractionListener
+import com.yoji.likeshare.adapter.PostAdapter
 import com.yoji.likeshare.databinding.ActivityMainBinding
+import com.yoji.likeshare.dto.Post
+import com.yoji.likeshare.repository.PostRepositoryJsonImplementation
+import com.yoji.likeshare.viewmodel.PostViewModel
 
 class MainActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
-    private val postViewModel by lazy { PostViewModel(PostRepositoryInMemoryImplementation()) }
+    private val postViewModel by lazy { PostViewModel(PostRepositoryJsonImplementation()) }
 
    companion object Code {
        const val newContent = "New content"

@@ -1,19 +1,30 @@
-package com.yoji.likeshare
+package com.yoji.likeshare.viewholder
 
+import android.annotation.SuppressLint
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import com.yoji.likeshare.listeners.OnInteractionListener
+import com.yoji.likeshare.R
+import com.yoji.likeshare.application.App
 import com.yoji.likeshare.databinding.ItemPostBinding
+import com.yoji.likeshare.dto.Post
+import com.yoji.likeshare.repository.PostRepositoryJsonImplementation
 
 class PostViewHolder
     (
     private val binding: ItemPostBinding,
     private val onInteractionListener: OnInteractionListener
 ) : RecyclerView.ViewHolder(binding.root) {
+    @SuppressLint("UseCompatLoadingForDrawables")
     fun bind(post: Post) {
         binding.apply {
             toolbarId.title = post.author
             toolbarId.subtitle = post.published
-            toolbarId.navigationIcon = post.avatar
+            toolbarId.navigationIcon = with(App.applicationContext().resources){
+                getDrawable(post.avatar, null) ?:
+                getDrawable(PostRepositoryJsonImplementation.DEF_AVATAR_ID, null)
+            }
+
             toolbarId.also { it.menu.clear() }.inflateMenu(R.menu.toolbar_menu)
             toolbarId.setOnMenuItemClickListener {
                 when (it.itemId) {

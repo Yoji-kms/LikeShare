@@ -1,4 +1,4 @@
-package com.yoji.likeshare
+package com.yoji.likeshare.activity
 
 import android.animation.ObjectAnimator
 import android.content.Intent
@@ -6,8 +6,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
-import com.yoji.likeshare.MainActivity.Code.newContent
-import com.yoji.likeshare.MainActivity.Code.prevContent
+import com.yoji.likeshare.activity.MainActivity.Code.newContent
+import com.yoji.likeshare.activity.MainActivity.Code.prevContent
 import com.yoji.likeshare.databinding.ActivityCreateOrEditBinding
 
 class CreateOrEditActivity : AppCompatActivity() {
