@@ -3,56 +3,42 @@ package com.yoji.likeshare.viewholder
 import android.annotation.SuppressLint
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import com.yoji.likeshare.listeners.OnInteractionListener
-import com.yoji.likeshare.R
 import com.yoji.likeshare.application.App
-import com.yoji.likeshare.databinding.ItemPostBinding
+import com.yoji.likeshare.databinding.FragmentItemBinding
 import com.yoji.likeshare.dto.Post
+import com.yoji.likeshare.listeners.OnPostClickListener
 import com.yoji.likeshare.repository.PostRepositoryJsonImplementation
 
-class PostViewHolder
-    (
-    private val binding: ItemPostBinding,
-    private val onInteractionListener: OnInteractionListener
+class PostViewHolder(
+    private val binding: FragmentItemBinding,
+    private val onPostClickListener: OnPostClickListener
 ) : RecyclerView.ViewHolder(binding.root) {
     @SuppressLint("UseCompatLoadingForDrawables")
     fun bind(post: Post) {
         binding.apply {
+
             toolbarId.title = post.author
             toolbarId.subtitle = post.published
             toolbarId.navigationIcon = with(App.applicationContext().resources){
                 getDrawable(post.avatar, null) ?:
                 getDrawable(PostRepositoryJsonImplementation.DEF_AVATAR_ID, null)
             }
-
-            toolbarId.also { it.menu.clear() }.inflateMenu(R.menu.toolbar_menu)
-            toolbarId.setOnMenuItemClickListener {
-                when (it.itemId) {
-                    R.id.delete_post -> {
-                        onInteractionListener.onRemove(post)
-                        true
-                    }
-                    R.id.edit_post -> {
-                        onInteractionListener.onEdit(post)
-                        true
-                    }
-                    else -> false
-                }
-            }
             if (!post.video.isNullOrBlank()) videoView
                 .also { it.visibility = View.VISIBLE }
-                .setOnClickListener { onInteractionListener.onPlayVideo(post) }
             else videoView.visibility = View.GONE
             if (post.content.isNotBlank()) textTxtViewId
                 .also { it.visibility = View.VISIBLE }
                 .text = post.content
             else textTxtViewId.visibility = View.GONE
+            likesCheckBoxId.isClickable = false
             likesCheckBoxId.isChecked = post.likedByMe
             likesCheckBoxId.text = post.likesCounter.toFormattedString()
-            likesCheckBoxId.setOnClickListener { onInteractionListener.onLike(post) }
             shareBtnId.text = post.shareCounter.toFormattedString()
-            shareBtnId.setOnClickListener { onInteractionListener.onShare(post) }
             watchesBtnId.text = post.watchesCounter.toFormattedString()
+
+            toolbarId.setOnClickListener { onPostClickListener.onClick(post) }
+            bottomPanel.setOnClickListener { onPostClickListener.onClick(post) }
+            textTxtViewId.setOnClickListener { onPostClickListener.onClick(post) }
         }
     }
 

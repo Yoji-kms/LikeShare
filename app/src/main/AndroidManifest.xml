@@ -12,17 +12,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LikeShare"
         tools:ignore="AllowBackup">
-        <activity android:name=".activity.MainActivity">
+        <activity android:name=".activity.ParentActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".activity.CreateOrEditActivity">
-        </activity>
-
     </application>
 
 </manifest>

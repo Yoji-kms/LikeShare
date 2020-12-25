@@ -1,27 +1,32 @@
 package com.yoji.likeshare.activity
 
 import android.animation.ObjectAnimator
-import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
+import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
-import com.yoji.likeshare.activity.MainActivity.Code.newContent
-import com.yoji.likeshare.activity.MainActivity.Code.prevContent
-import com.yoji.likeshare.databinding.ActivityCreateOrEditBinding
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import com.yoji.likeshare.R
+import com.yoji.likeshare.databinding.FragmentCreateOrEditBinding
+import com.yoji.likeshare.viewmodel.PostViewModel
 
-class CreateOrEditActivity : AppCompatActivity() {
+class CreateOrEditFragment : Fragment() {
 
-    private val binding by lazy { ActivityCreateOrEditBinding.inflate(layoutInflater) }
+    private val binding by lazy { FragmentCreateOrEditBinding.inflate(layoutInflater) }
+    private val postViewModel : PostViewModel by viewModels (ownerProducer = ::requireActivity)
     private val lines by lazy { binding.prevContentTxtView.lineCount }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(binding.root)
-
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         binding.prevContentTxtView.also { it.post { kotlin.run { lines } } }.maxLines = 1
 
-        val previousContent = intent.getStringExtra(prevContent)
+        val previousContent = postViewModel.selectedPost.value?.content
 
         if (previousContent.isNullOrBlank()){
             binding.editGroup.visibility = View.GONE
@@ -62,16 +67,15 @@ class CreateOrEditActivity : AppCompatActivity() {
         }
 
         binding.saveBtnId.setOnClickListener {
-            setResult(
-                RESULT_OK,
-                Intent().putExtra(newContent, binding.newContentEdtTxt.text.toString())
-            )
-            finish()
+            postViewModel.changeContent(binding.newContentEdtTxt.text.toString())
+            postViewModel.save()
+            findNavController().navigate(R.id.action_createOrEditFragment_to_mainFragment)
         }
+        return binding.root
     }
 
-    override fun onBackPressed() {
-        setResult(RESULT_CANCELED)
-        finish()
+    override fun onDestroyView() {
+        super.onDestroyView()
+        postViewModel.clear()
     }
 }

@@ -11,7 +11,7 @@ import com.yoji.likeshare.repository.PostRepositoryJsonImplementation
 
 @SuppressLint("UseCompatLoadingForDrawables")
 private val emptyPost = Post(
-    id = 0,
+    id = 0L,
     content = "",
     author = "",
     avatar = PostRepositoryJsonImplementation.DEF_AVATAR_ID,
@@ -23,33 +23,33 @@ private val emptyPost = Post(
 )
 
 class PostViewModel(
-    private val postRepository: PostRepository
+    private val postRepository: PostRepository = PostRepositoryJsonImplementation()
 ) : ViewModel() {
     val data = postRepository.getAll()
-    private val editingPost = MutableLiveData(emptyPost)
+    val selectedPost = MutableLiveData(emptyPost)
 
     fun likeById(id: Long) = postRepository.likeById(id)
     fun shareById(id: Long) = postRepository.shareById(id)
     fun removeById(id: Long) = postRepository.removeById(id)
 
     fun edit(post: Post) {
-        editingPost.value = post
+        selectedPost.value = post
     }
 
     fun clear() {
-        editingPost.value = emptyPost
+        selectedPost.value = emptyPost
     }
 
     fun save() {
-        editingPost.value?.let { postRepository.save(it) }
-        editingPost.value = emptyPost
+        selectedPost.value?.let { postRepository.save(it) }
+        selectedPost.value = emptyPost
     }
 
     fun changeContent(newContent: String) {
         val newContentTrimmed = newContent.trim()
-        if (editingPost.value?.content == newContentTrimmed) {
+        if (selectedPost.value?.content == newContentTrimmed) {
             return
         }
-        editingPost.value = editingPost.value?.copy(content = newContentTrimmed)
+        selectedPost.value = selectedPost.value?.copy(content = newContentTrimmed)
     }
 }
