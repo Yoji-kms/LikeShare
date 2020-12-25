@@ -49,6 +49,9 @@ class CreateOrEditFragment : Fragment() {
                         start()
                     }
             }
+            binding.constraintLayout.invalidate()
+            binding.nestedScrlViewId.invalidate()
+            binding.nestedScrlViewId.requestLayout()
         }
 
         binding.copyToEdtTxtBtn.setOnClickListener {

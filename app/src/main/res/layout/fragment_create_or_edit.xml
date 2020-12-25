@@ -8,66 +8,79 @@
     tools:context=".activity.CreateOrEditFragment">
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrlViewId"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:fillViewport="true">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_gravity="top"
+            android:gravity="top"
+            android:foregroundGravity="top"
             android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <EditText
-                android:id="@+id/newContentEdtTxt"
-                android:layout_width="0dp"
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/newContentEdtTxt"
+                    android:layout_weight="8"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:hint="@string/type_a_message"
+                    android:importantForAutofill="no"
+                    android:inputType="textMultiLine"
+                    android:layout_width="0dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_margin="8dp"
+                    android:id="@+id/clearEdtTxtBtn"
+                    style="@style/TransparentBtnStyle"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:enabled="false"
+                    app:icon="@drawable/icon_clear"
+                    app:iconGravity="textStart"
+                    app:iconSize="40dp"
+                    app:iconTint="@color/clear_btn_color_selector" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:hint="@string/type_a_message"
-                android:importantForAutofill="no"
-                android:inputType="textMultiLine"
-                app:layout_constraintEnd_toStartOf="@id/clearEdtTxtBtn"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_gravity="center_vertical"
+                    android:id="@+id/prevContentTxtView"
+                    android:layout_weight="8"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:maxLines="1"
+                    android:text="@string/content1" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/copyToEdtTxtBtn"
+                    style="@style/TransparentBtnStyle"
+                    android:layout_margin="8dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    app:icon="@drawable/icon_copy_prev_text"
+                    app:iconGravity="textStart"
+                    app:iconSize="40dp"
+                    app:iconTint="#7E57C2" />
+
+            </LinearLayout>
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/clearEdtTxtBtn"
-                style="@style/TransparentBtnStyle"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:enabled="false"
-                app:icon="@drawable/icon_clear"
-                app:iconGravity="textStart"
-                app:iconSize="40dp"
-                app:iconTint="@color/clear_btn_color_selector"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/newContentEdtTxt"
-                app:layout_constraintTop_toTopOf="@id/newContentEdtTxt" />
-
-            <TextView
-                android:id="@+id/prevContentTxtView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:maxLines="1"
-                android:text="@string/content1"
-                app:layout_constraintEnd_toStartOf="@id/copyToEdtTxtBtn"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/newContentEdtTxt" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/copyToEdtTxtBtn"
-                style="@style/TransparentBtnStyle"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                app:icon="@drawable/icon_copy_prev_text"
-                app:iconGravity="textStart"
-                app:iconSize="40dp"
-                app:iconTint="#7E57C2"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/prevContentTxtView"
-                app:layout_constraintTop_toBottomOf="@id/newContentEdtTxt" />
-
-            <com.google.android.material.button.MaterialButton
+                android:layout_gravity="center"
                 android:id="@+id/showMoreBtn"
                 style="@style/TransparentBtnStyle"
                 android:layout_width="@dimen/icon_size"
@@ -84,7 +97,7 @@
                 android:layout_height="wrap_content"
                 app:constraint_referenced_ids="copyToEdtTxtBtn, prevContentTxtView, showMoreBtn" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
     <com.google.android.material.bottomappbar.BottomAppBar
