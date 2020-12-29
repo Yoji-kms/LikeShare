@@ -12,7 +12,11 @@
             app:destination="@id/itemFragment" />
         <action
             android:id="@+id/action_mainFragment_to_createOrEditFragment"
-            app:destination="@id/createOrEditFragment" />
+            app:destination="@id/createOrEditFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out"/>
     </fragment>
     <fragment
         android:id="@+id/createOrEditFragment"
@@ -20,7 +24,18 @@
         android:label="CreateOrEditFragment" >
         <action
             android:id="@+id/action_createOrEditFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
+            app:destination="@id/mainFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out"/>
+        <action
+            android:id="@+id/action_createOrEditFragment_to_itemFragment"
+            app:destination="@id/itemFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out"/>
     </fragment>
     <fragment
         android:id="@+id/itemFragment"
@@ -28,9 +43,17 @@
         android:label="ItemFragment" >
         <action
             android:id="@+id/action_itemFragment_to_createOrEditFragment"
-            app:destination="@id/createOrEditFragment" />
+            app:destination="@id/createOrEditFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out"/>
         <action
             android:id="@+id/action_itemFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
+            app:destination="@id/mainFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out"/>
     </fragment>
 </navigation>

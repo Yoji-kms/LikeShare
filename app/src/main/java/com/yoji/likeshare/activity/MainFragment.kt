@@ -16,7 +16,8 @@ import com.yoji.likeshare.viewmodel.PostViewModel
 
 class MainFragment : Fragment() {
 
-    private val binding by lazy { FragmentMainBinding.inflate(layoutInflater) }
+    private var _binding: FragmentMainBinding? = null
+    private val binding get() = _binding!!
     private val postViewModel : PostViewModel by viewModels(ownerProducer = ::requireActivity)
 
     override fun onCreateView(
@@ -24,6 +25,7 @@ class MainFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        _binding = FragmentMainBinding.inflate(inflater, container, false)
         val postAdapter = PostAdapter(object : OnPostClickListener {
             override fun onClick(post: Post) {
                 postViewModel.edit(post)
@@ -34,11 +36,17 @@ class MainFragment : Fragment() {
         binding.postListViewId.adapter = postAdapter
 
         binding.createPostFab.setOnClickListener {
+            postViewModel.clear()
             findNavController().navigate(R.id.action_mainFragment_to_createOrEditFragment)
         }
 
         postViewModel.data.observe(viewLifecycleOwner, { posts -> postAdapter.submitList(posts) })
 
         return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

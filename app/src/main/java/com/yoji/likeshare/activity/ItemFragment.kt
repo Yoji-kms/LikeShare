@@ -1,13 +1,16 @@
 package com.yoji.likeshare.activity
 
 import android.annotation.SuppressLint
+import android.content.ComponentName
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -16,12 +19,12 @@ import com.yoji.likeshare.application.App
 import com.yoji.likeshare.databinding.FragmentItemBinding
 import com.yoji.likeshare.dto.Post
 import com.yoji.likeshare.listeners.OnInteractionListener
-import com.yoji.likeshare.repository.PostRepositoryJsonImplementation
 import com.yoji.likeshare.viewmodel.PostViewModel
 
 class ItemFragment : Fragment() {
 
-    private val binding by lazy { FragmentItemBinding.inflate(layoutInflater) }
+    private var _binding: FragmentItemBinding? = null
+    private val binding get() = _binding!!
     private val postViewModel: PostViewModel by viewModels(ownerProducer = ::requireActivity)
 
 
@@ -31,6 +34,37 @@ class ItemFragment : Fragment() {
         }
 
         override fun onShare(post: Post) {
+            val intent = Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_TEXT, post.content)
+                type = "text/plain"
+            }
+
+            val shareIntent = Intent.createChooser(intent, null)
+
+            with(createInitialIntentArray()) {
+                if (this.isNotEmpty()) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                        shareIntent.putExtra(
+                            Intent.EXTRA_EXCLUDE_COMPONENTS,
+                            createExcludeComponentArray()
+                        )
+                    } else {
+                        shareIntent.putExtra(
+                            Intent.EXTRA_INITIAL_INTENTS,
+                            createInitialIntentArray()
+                        )
+                    }
+                } else {
+                    Toast.makeText(
+                        context,
+                        getString(R.string.no_apps_to_share),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+
+            startActivity(shareIntent)
             postViewModel.shareById(post.id)
         }
 
@@ -55,9 +89,11 @@ class ItemFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        _binding = FragmentItemBinding.inflate(inflater, container, false)
         val post = postViewModel.selectedPost.value
         if (post == null) {
-            Toast.makeText(context, "Error: Can not load post!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, getString(R.string.error_can_not_load_post), Toast.LENGTH_SHORT)
+                .show()
             findNavController().navigate(R.id.action_itemFragment_to_mainFragment)
             return binding.root
         }
@@ -66,7 +102,7 @@ class ItemFragment : Fragment() {
             toolbarId.subtitle = post.published
             toolbarId.navigationIcon = with(App.applicationContext().resources) {
                 getDrawable(post.avatar, null)
-                    ?: getDrawable(PostRepositoryJsonImplementation.DEF_AVATAR_ID, null)
+                    ?: getDrawable(Post.DEF_AVATAR_ID, null)
             }
 
             toolbarId.also { it.menu.clear() }.inflateMenu(R.menu.toolbar_menu)
@@ -111,6 +147,18 @@ class ItemFragment : Fragment() {
         return binding.root
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        requireActivity().onBackPressedDispatcher.addCallback(
+            this,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    findNavController().navigate(R.id.action_itemFragment_to_mainFragment)
+                }
+            })
+    }
+
     private fun Int.toFormattedString() = when (this) {
         in 0..999 -> this.toString()
         in 1_000..9_999 -> this.roundToThousandsWithOneDecimal().toString() + "K"
@@ -123,4 +171,61 @@ class ItemFragment : Fragment() {
     }
 
     private fun Int.roundToThousandsWithOneDecimal(): Double = (this / 100).toDouble() / 10
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    private fun createInitialIntentArray(): Array<Intent> {
+        val intent = Intent().apply {
+            action = Intent.ACTION_SEND
+            type = "text/plain"
+        }
+        val intentList = mutableListOf<Intent>()
+        App.applicationContext().packageManager.queryIntentActivities(intent, 0).filter {
+            with(it.activityInfo.packageName) {
+                contains("twitter")
+                        || contains("facebook")
+                        || contains("whatsapp")
+                        || contains("messenger")
+                        || contains("messaging")
+                        || contains("vkontakte")
+                        || contains("skype")
+                        || contains("viber")
+            }
+        }.forEach {
+            intentList.add(Intent().apply {
+                action = Intent.ACTION_SEND
+                component = ComponentName(it.activityInfo.packageName, it.activityInfo.name)
+                type = "text/plain"
+            })
+        }
+
+        return intentList.toTypedArray()
+    }
+
+    private fun createExcludeComponentArray(): Array<ComponentName> {
+        val intent = Intent().apply {
+            action = Intent.ACTION_SEND
+            type = "text/plain"
+        }
+        val componentList = mutableListOf<ComponentName>()
+        App.applicationContext().packageManager.queryIntentActivities(intent, 0).filter {
+            with(it.activityInfo.packageName) {
+                !(contains("twitter")
+                        || contains("facebook")
+                        || contains("whatsapp")
+                        || contains("messenger")
+                        || contains("messaging")
+                        || contains("vkontakte")
+                        || contains("skype")
+                        || contains("viber"))
+            }
+        }.forEach {
+            componentList.add(ComponentName(it.activityInfo.packageName, it.activityInfo.name))
+        }
+
+        return componentList.toTypedArray()
+    }
 }
