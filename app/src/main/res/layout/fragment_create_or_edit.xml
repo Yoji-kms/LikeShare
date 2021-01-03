@@ -62,7 +62,7 @@
                     android:layout_weight="8"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
+                    android:layout_marginHorizontal="8dp"
                     android:maxLines="1"
                     android:text="@string/content1" />
 
@@ -76,11 +76,10 @@
                     app:iconGravity="textStart"
                     app:iconSize="40dp"
                     app:iconTint="#7E57C2" />
-
             </LinearLayout>
 
             <com.google.android.material.button.MaterialButton
-                android:layout_gravity="center"
+                android:layout_gravity="center|top"
                 android:id="@+id/showMoreBtn"
                 style="@style/TransparentBtnStyle"
                 android:layout_width="@dimen/icon_size"
@@ -90,13 +89,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/prevContentTxtView" />
-
-            <androidx.constraintlayout.widget.Group
-                android:id="@+id/editGroup"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:constraint_referenced_ids="copyToEdtTxtBtn, prevContentTxtView, showMoreBtn" />
-
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
@@ -104,7 +96,7 @@
         android:id="@+id/bottomAppbar"
         style="@style/Widget.MaterialComponents.BottomAppBar.Colored"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_gravity="bottom"
         app:fabAlignmentMode="end"
         app:hideOnScroll="true"

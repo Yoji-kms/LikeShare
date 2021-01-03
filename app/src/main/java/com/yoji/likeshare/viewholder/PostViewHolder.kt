@@ -21,7 +21,7 @@ class PostViewHolder(
             toolbarId.subtitle = post.published
             toolbarId.navigationIcon = with(App.applicationContext().resources){
                 getDrawable(post.avatar, null) ?:
-                getDrawable(PostRepositoryJsonImplementation.DEF_AVATAR_ID, null)
+                getDrawable(Post.DEF_AVATAR_ID, null)
             }
             if (!post.video.isNullOrBlank()) videoView
                 .also { it.visibility = View.VISIBLE }

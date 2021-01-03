@@ -15,11 +15,6 @@ class PostRepositoryJsonImplementation : PostRepository {
     companion object {
         const val FILE = "posts.json"
         val context: Context = App.applicationContext()
-        val DEF_AVATAR_ID = context.resources.getIdentifier(
-            "ic_default_user",
-            "drawable",
-            App.applicationContext().packageName
-        )
     }
 
     private val gson = Gson()
@@ -34,7 +29,6 @@ class PostRepositoryJsonImplementation : PostRepository {
     }
 
     private val data = MutableLiveData(posts)
-
 
     override fun getAll(): LiveData<List<Post>> = data
 
@@ -73,7 +67,7 @@ class PostRepositoryJsonImplementation : PostRepository {
                 post.copy(
                     id = (posts.lastIndex + 2).toLong(),
                     author = App.applicationContext().resources.getString(R.string.default_author),
-                    avatar = DEF_AVATAR_ID,
+                    avatar = Post.DEF_AVATAR_ID,
                     likedByMe = false,
                     published = App.applicationContext().resources.getString(R.string.default_date)
                 )
