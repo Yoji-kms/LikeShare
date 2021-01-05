@@ -1,4 +1,4 @@
-package com.yoji.likeshare.db
+package com.yoji.likeshare.dao
 
 import com.yoji.likeshare.dto.Post
 

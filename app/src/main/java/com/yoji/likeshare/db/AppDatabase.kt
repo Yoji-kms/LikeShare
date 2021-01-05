@@ -2,6 +2,7 @@ package com.yoji.likeshare.db
 
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
+import com.yoji.likeshare.dao.PostDaoImplementation
 
 class AppDatabase private constructor(db: SQLiteDatabase) {
     val postDAO = PostDaoImplementation(db)

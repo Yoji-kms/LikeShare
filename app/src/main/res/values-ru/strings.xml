@@ -17,4 +17,6 @@
     <string name="type_a_message">Введите текст</string>
     <string name="error_can_not_load_post">Ошибка: Не получается загрузить пост!</string>
     <string name="no_apps_to_share">Нет приложений для отправки сообщения</string>
+    <string name="published">"Опубликовано "</string>
+    <string name="published_at">" в "</string>
 </resources>

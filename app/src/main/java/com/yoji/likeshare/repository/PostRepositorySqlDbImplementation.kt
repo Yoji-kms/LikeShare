@@ -2,7 +2,7 @@ package com.yoji.likeshare.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.yoji.likeshare.db.PostDAO
+import com.yoji.likeshare.dao.PostDAO
 import com.yoji.likeshare.dto.Post
 
 class PostRepositorySqlDbImplementation(private val dao: PostDAO) : PostRepository {

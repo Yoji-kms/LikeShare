@@ -20,14 +20,16 @@ import com.yoji.likeshare.application.App
 import com.yoji.likeshare.databinding.FragmentItemBinding
 import com.yoji.likeshare.dto.Post
 import com.yoji.likeshare.listeners.OnInteractionListener
+import com.yoji.likeshare.repository.PostRepositoryJsonImplementation
 import com.yoji.likeshare.viewmodel.PostViewModel
+import java.text.SimpleDateFormat
+import java.util.*
 
 class ItemFragment : Fragment() {
 
     private var _binding: FragmentItemBinding? = null
     private val binding get() = _binding!!
     private val postViewModel: PostViewModel by viewModels(ownerProducer = ::requireActivity)
-
 
     private val onInteractionListener = object : OnInteractionListener {
         override fun onLike(post: Post) {
@@ -100,12 +102,11 @@ class ItemFragment : Fragment() {
         }
         binding.apply {
             toolbarId.title = post.author
-            toolbarId.subtitle = post.published
+            toolbarId.subtitle = post.published.toFormattedString()
             toolbarId.navigationIcon = with(App.applicationContext().resources) {
                 getDrawable(post.avatar, null)
                     ?: getDrawable(Post.DEF_AVATAR_ID, null)
             }
-
             toolbarId.also { it.menu.clear() }.inflateMenu(R.menu.toolbar_menu)
             toolbarId.setOnMenuItemClickListener {
                 when (it.itemId) {
@@ -175,6 +176,13 @@ class ItemFragment : Fragment() {
     }
 
     private fun Int.roundToThousandsWithOneDecimal(): Double = (this / 100).toDouble() / 10
+
+    @SuppressLint("SimpleDateFormat")
+    private fun Date.toFormattedString() = StringBuilder()
+        .append(SimpleDateFormat("dd MMM yyyy").format(this))
+        .append(PostRepositoryJsonImplementation.context.getString(R.string.published_at))
+        .append(SimpleDateFormat("hh:mm:ss").format(this))
+        .toString()
 
     override fun onDestroyView() {
         super.onDestroyView()
