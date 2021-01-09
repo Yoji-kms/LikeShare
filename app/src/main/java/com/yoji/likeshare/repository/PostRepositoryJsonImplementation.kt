@@ -9,6 +9,7 @@ import com.google.gson.reflect.TypeToken
 import com.yoji.likeshare.application.App
 import com.yoji.likeshare.dto.Post
 import com.yoji.likeshare.R
+import java.util.*
 
 class PostRepositoryJsonImplementation : PostRepository {
 
@@ -69,7 +70,7 @@ class PostRepositoryJsonImplementation : PostRepository {
                     author = App.applicationContext().resources.getString(R.string.default_author),
                     avatar = Post.DEF_AVATAR_ID,
                     likedByMe = false,
-                    published = App.applicationContext().resources.getString(R.string.default_date)
+                    published = Calendar.getInstance().time
                 )
             ) + posts
         } else {

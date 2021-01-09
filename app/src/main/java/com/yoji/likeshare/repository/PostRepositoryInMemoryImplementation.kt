@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import com.yoji.likeshare.application.App
 import com.yoji.likeshare.dto.Post
 import com.yoji.likeshare.R
+import java.util.*
 import kotlin.random.Random
 
 class PostRepositoryInMemoryImplementation : PostRepository {
@@ -23,7 +24,8 @@ class PostRepositoryInMemoryImplementation : PostRepository {
                 "drawable",
                 context.packageName
             ),
-            published = App.applicationContext().resources.getString(R.string.some_date),
+            //Поменять
+            published = Calendar.getInstance().time,
             content = App.applicationContext().resources.getString(R.string.content1),
             likedByMe = false,
             likesCounter = Random.nextInt(from = 0, until = 999),
@@ -38,7 +40,8 @@ class PostRepositoryInMemoryImplementation : PostRepository {
                 "drawable",
                 context.packageName
             ),
-            published = App.applicationContext().resources.getString(R.string.some_date2),
+            //Поменять
+            published = Calendar.getInstance().time,
             content = context.resources.getString(R.string.content2),
             likedByMe = false,
             likesCounter = Random.nextInt(from = 0, until = 999),
@@ -53,7 +56,8 @@ class PostRepositoryInMemoryImplementation : PostRepository {
                 "drawable",
                 context.packageName
             ),
-            published = App.applicationContext().resources.getString(R.string.some_date2),
+            //Поменять
+            published = Calendar.getInstance().time,
             content = "",
             likedByMe = false,
             video = "https://www.youtube.com/watch?v=pwHqY_4nsJ4",
@@ -104,7 +108,8 @@ class PostRepositoryInMemoryImplementation : PostRepository {
                         context.packageName
                     ),
                     likedByMe = false,
-                    published = App.applicationContext().resources.getString(R.string.default_date)
+                    //Поменять
+                    published = Calendar.getInstance().time
                 )
             ) + posts
         } else {

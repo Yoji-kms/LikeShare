@@ -1,10 +1,12 @@
-package com.yoji.likeshare.db
+package com.yoji.likeshare.dao
 
 import android.content.ContentValues
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import androidx.core.database.getStringOrNull
+import com.yoji.likeshare.db.PostColumns
 import com.yoji.likeshare.dto.Post
+import java.util.*
 
 class PostDaoImplementation(private val db: SQLiteDatabase) : PostDAO {
     companion object {
@@ -96,7 +98,7 @@ class PostDaoImplementation(private val db: SQLiteDatabase) : PostDAO {
             if (post.id != 0L) put(PostColumns.COLUMN_ID, post.id)
             put(PostColumns.COLUMN_AUTHOR, post.author)
             put(PostColumns.COLUMN_AVATAR, post.avatar)
-            put(PostColumns.COLUMN_PUBLISHED, post.published)
+            put(PostColumns.COLUMN_PUBLISHED, post.published.time)
             put(PostColumns.COLUMN_CONTENT, post.content)
             put(PostColumns.COLUMN_VIDEO, post.video)
             put(PostColumns.COLUMN_LIKED_BY_ME, post.likedByMe)
@@ -114,7 +116,7 @@ class PostDaoImplementation(private val db: SQLiteDatabase) : PostDAO {
                 id = getLong(getColumnIndexOrThrow(PostColumns.COLUMN_ID)),
                 author = getString(getColumnIndexOrThrow(PostColumns.COLUMN_AUTHOR)),
                 avatar = getInt(getColumnIndexOrThrow(PostColumns.COLUMN_AVATAR)),
-                published = getString(getColumnIndexOrThrow(PostColumns.COLUMN_PUBLISHED)),
+                published = Date(getLong(getColumnIndexOrThrow(PostColumns.COLUMN_PUBLISHED))),
                 content = getString(getColumnIndexOrThrow(PostColumns.COLUMN_CONTENT)),
                 likedByMe = getInt(getColumnIndexOrThrow(PostColumns.COLUMN_LIKED_BY_ME)) != 0,
                 video = getStringOrNull(getColumnIndexOrThrow(PostColumns.COLUMN_VIDEO)),
