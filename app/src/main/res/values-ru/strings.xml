@@ -15,5 +15,10 @@
     <string name="type_a_message">Введите текст</string>
     <string name="error_can_not_load_post">Ошибка: Не получается загрузить пост!</string>
     <string name="no_apps_to_share">Нет приложений для отправки сообщения</string>
-    <string name="published_at">" в "</string>
+    <string name="published_at">%1$s в %2$s</string>
+    <string name="google_api_unavailable">Сервисы Google недоступны</string>
+    <string name="notification_user_liked">Пользователю %1$s понравился пост %2$s</string>
+    <string name="channel_remote_name">Уведомления с сервера</string>
+    <string name="channel_remote_description">Уведомления с удаленного сервера</string>
+    <string name="notification_new_post">Пользователь %1$s опубликовал новый пост</string>
 </resources>

@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import com.yoji.likeshare.R
 import com.yoji.likeshare.application.App
 import com.yoji.likeshare.databinding.FragmentCreateOrEditBinding
+import com.yoji.likeshare.utils.AndroidUtils
 import com.yoji.likeshare.viewmodel.PostViewModel
 
 class CreateOrEditFragment : Fragment() {
@@ -95,6 +96,8 @@ class CreateOrEditFragment : Fragment() {
                 clear()
                 apply()
             }
+            it.clearFocus()
+            AndroidUtils.hideKeyboard(it)
             findNavController().navigate(R.id.action_createOrEditFragment_to_mainFragment)
         }
         return binding.root

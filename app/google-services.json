@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "24551617175",
+    "project_id": "netologypost",
+    "storage_bucket": "netologypost.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:24551617175:android:1f87cc0bbce8fdc6b26fd2",
+        "android_client_info": {
+          "package_name": "com.yoji.likeshare"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "24551617175-r7k2asegjgjkta1fpd7lich92sjgj9vj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA08OWEFzzLUEgE24leBDX3FL5rSFEwqmA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "24551617175-r7k2asegjgjkta1fpd7lich92sjgj9vj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

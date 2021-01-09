@@ -20,7 +20,6 @@ import com.yoji.likeshare.application.App
 import com.yoji.likeshare.databinding.FragmentItemBinding
 import com.yoji.likeshare.dto.Post
 import com.yoji.likeshare.listeners.OnInteractionListener
-import com.yoji.likeshare.repository.PostRepositoryJsonImplementation
 import com.yoji.likeshare.viewmodel.PostViewModel
 import java.text.SimpleDateFormat
 import java.util.*
@@ -178,11 +177,11 @@ class ItemFragment : Fragment() {
     private fun Int.roundToThousandsWithOneDecimal(): Double = (this / 100).toDouble() / 10
 
     @SuppressLint("SimpleDateFormat")
-    private fun Date.toFormattedString() = StringBuilder()
-        .append(SimpleDateFormat("dd MMM yyyy").format(this))
-        .append(PostRepositoryJsonImplementation.context.getString(R.string.published_at))
-        .append(SimpleDateFormat("hh:mm:ss").format(this))
-        .toString()
+    private fun Date.toFormattedString() = getString(
+        R.string.published_at,
+        SimpleDateFormat("dd MMM yyyy").format(this),
+        SimpleDateFormat("hh:mm:ss").format(this)
+    )
 
     override fun onDestroyView() {
         super.onDestroyView()

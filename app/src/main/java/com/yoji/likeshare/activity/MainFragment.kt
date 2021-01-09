@@ -1,14 +1,20 @@
 package com.yoji.likeshare.activity
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
 import com.yoji.likeshare.R
 import com.yoji.likeshare.adapter.PostAdapter
+import com.yoji.likeshare.application.App
 import com.yoji.likeshare.databinding.FragmentMainBinding
 import com.yoji.likeshare.dto.Post
 import com.yoji.likeshare.listeners.OnPostClickListener
