@@ -6,7 +6,6 @@
         <item name="iconSize">@dimen/icon_size</item>
         <item name="iconGravity">textStart</item>
         <item name="iconPadding">4dp</item>
-
     </style>
 
     <style name="LikeBtnStyle" parent="TransparentBtnStyle">
