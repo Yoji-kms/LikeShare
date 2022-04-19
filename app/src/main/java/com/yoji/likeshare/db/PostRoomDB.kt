@@ -9,7 +9,7 @@ import com.yoji.likeshare.converters.Converters
 import com.yoji.likeshare.dao.PostRoomDAO
 import com.yoji.likeshare.entity.PostEntity
 
-@Database(entities = [PostEntity::class], version = 1)
+@Database(entities = [PostEntity::class], version = 1, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class PostRoomDB : RoomDatabase() {
     abstract fun postDAO(): PostRoomDAO
