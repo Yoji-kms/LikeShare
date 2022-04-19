@@ -22,7 +22,7 @@ class ParentActivity : AppCompatActivity() {
                 return@with
             }
             if (isUserResolvableError(code)) {
-                getErrorDialog(this@ParentActivity, code, 9000).show()
+                getErrorDialog(this@ParentActivity, code, 9000)?.show()
                 return
             }
             Toast.makeText(

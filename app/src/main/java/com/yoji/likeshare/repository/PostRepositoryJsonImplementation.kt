@@ -15,6 +15,7 @@ class PostRepositoryJsonImplementation : PostRepository {
 
     companion object {
         const val FILE = "posts.json"
+        @SuppressLint("StaticFieldLeak")
         val context: Context = App.applicationContext()
     }
 

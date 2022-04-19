@@ -1,4 +1,4 @@
-package com.yoji.likeshare.activity
+package com.yoji.likeshare.fragments
 
 import android.annotation.SuppressLint
 import android.content.ComponentName
@@ -140,13 +140,13 @@ class ItemFragment : Fragment() {
         }
 
         postViewModel.data.observe(
-            viewLifecycleOwner,
-            { posts ->
-                with(posts.singleOrNull { it.id == post.id }) {
-                    binding.likesCheckBoxId.text = this?.likesCounter?.toFormattedString() ?: "0"
-                    binding.shareBtnId.text = this?.shareCounter?.toFormattedString() ?: "0"
-                }
-            })
+            viewLifecycleOwner
+        ) { posts ->
+            with(posts.singleOrNull { it.id == post.id }) {
+                binding.likesCheckBoxId.text = this?.likesCounter?.toFormattedString() ?: "0"
+                binding.shareBtnId.text = this?.shareCounter?.toFormattedString() ?: "0"
+            }
+        }
 
         return binding.root
     }
@@ -188,6 +188,7 @@ class ItemFragment : Fragment() {
         _binding = null
     }
 
+    @SuppressLint("QueryPermissionsNeeded")
     private fun createInitialIntentArray(): Array<Intent> {
         val intent = Intent().apply {
             action = Intent.ACTION_SEND
@@ -216,6 +217,7 @@ class ItemFragment : Fragment() {
         return intentList.toTypedArray()
     }
 
+    @SuppressLint("QueryPermissionsNeeded")
     private fun createExcludeComponentArray(): Array<ComponentName> {
         val intent = Intent().apply {
             action = Intent.ACTION_SEND

@@ -5,7 +5,7 @@
 
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.yoji.likeshare.activity.MainFragment"
+        android:name="com.yoji.likeshare.fragments.MainFragment"
         android:label="MainFragment" >
         <action
             android:id="@+id/action_mainFragment_to_itemFragment"
@@ -20,7 +20,7 @@
     </fragment>
     <fragment
         android:id="@+id/createOrEditFragment"
-        android:name="com.yoji.likeshare.activity.CreateOrEditFragment"
+        android:name="com.yoji.likeshare.fragments.CreateOrEditFragment"
         android:label="CreateOrEditFragment" >
         <action
             android:id="@+id/action_createOrEditFragment_to_mainFragment"
@@ -39,7 +39,7 @@
     </fragment>
     <fragment
         android:id="@+id/itemFragment"
-        android:name="com.yoji.likeshare.activity.ItemFragment"
+        android:name="com.yoji.likeshare.fragments.ItemFragment"
         android:label="ItemFragment" >
         <action
             android:id="@+id/action_itemFragment_to_createOrEditFragment"

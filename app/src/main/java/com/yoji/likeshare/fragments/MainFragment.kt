@@ -1,4 +1,4 @@
-package com.yoji.likeshare.activity
+package com.yoji.likeshare.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -40,7 +40,7 @@ class MainFragment : Fragment() {
             findNavController().navigate(R.id.action_mainFragment_to_createOrEditFragment)
         }
 
-        postViewModel.data.observe(viewLifecycleOwner, { posts -> postAdapter.submitList(posts) })
+        postViewModel.data.observe(viewLifecycleOwner) { posts -> postAdapter.submitList(posts) }
 
         return binding.root
     }

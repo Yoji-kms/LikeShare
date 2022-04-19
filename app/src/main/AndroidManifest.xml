@@ -13,7 +13,8 @@
         android:theme="@style/Theme.LikeShare"
         android:windowSoftInputMode="adjustResize"
         tools:ignore="AllowBackup">
-        <activity android:name=".activity.ParentActivity">
+        <activity android:name=".activity.ParentActivity"
+            android:exported="true">
             <nav-graph android:value="@navigation/navigation" />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

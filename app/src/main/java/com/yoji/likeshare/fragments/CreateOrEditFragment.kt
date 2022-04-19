@@ -1,4 +1,4 @@
-package com.yoji.likeshare.activity
+package com.yoji.likeshare.fragments
 
 import android.animation.ObjectAnimator
 import android.content.Context
